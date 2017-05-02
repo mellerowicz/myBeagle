@@ -1,0 +1,60 @@
+/*  
+* Copyright (C) 2012 Texas Instruments Incorporated - http://www.ti.com/
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Purpose License Version 2 as
+* published by the Free Software Foundation
+*
+* Original from: github.com/jadonk/validation-scripts/blob/master/test-capemgr/ 
+*
+* Modified by Boleslaw Mellerowicz for P420/407 Deep Drill - 2016-4-27
+*/
+
+
+/dts-v1/;
+/plugin/;
+
+/{
+       compatible = "ti,beaglebone", "ti,beaglebone-black";
+       part-number = "DRILL-GPIO";
+       version = "00A0";
+
+       fragment@0 {
+             target = <&am33xx_pinmux>;
+            
+             __overlay__ {
+                  pinctrl_test: DRILL_GPIO_Pins {
+			pinctrl-single,pins = <
+				
+				/* OUTPUTS */
+				0x02c 0x07  /* GPIO0_27 P8_17 GPIO=27 $PINS=11 OUTPUT MODE7 pulldown - ESTOP */
+			     /* 0x034 0x07  /* GPIO1_13 P8_11 GPIO=45 $PINS=13 OUTPUT MODE7 pulldown - ESTOP PRU */
+				0x044 0x07  /* GPIO1_17 P9_23 GPIO=49 $PINS=17 OUTPUT MODE7 pulldown - PIEZO HV SSR */
+				0x03c 0x07  /* GPIO1_15 P8_15 GPIO=47 $PINS=15 OUTPUT MODE7 pulldown - PIEZO 5V SWITCH */
+				0x1a4 0x07  /* GPIO3_19 P9_27 GPIO=115 $PINS=105 OUTPUT MODE7 pulldown - WATSON SSR */
+			     	0x048 0x06  /* EHRPWM1A P9_14 GPIO=50 $PINS=18 OUTPUT MODE6 pulldown - CAMERA LEDS PWM */	
+			        
+				/* INPUTS */
+				0x1b4 0x27  /* GPIO0_20 P9_41A GPIO=20 $PINS=109 INPUT MODE7 pulldown - MDCM FAULT */
+				
+
+                               /* OUTPUT  GPIO(mode7) 0x07 pulldown, 0x17 pullup, 0x?f no pullup/down */
+			       /* INPUT   GPIO(mode7) 0x27 pulldown, 0x37 pullup, 0x?f no pullup/down */
+
+			>;
+		  };
+             };
+       };
+
+       fragment@1 {
+		target = <&ocp>;
+		__overlay__ {
+			test_helper: helper {
+				compatible = "bone-pinmux-helper";
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_test>;
+				status = "okay";
+			};
+		};
+	};
+};
