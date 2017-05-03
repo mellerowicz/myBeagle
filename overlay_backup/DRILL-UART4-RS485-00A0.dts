@@ -41,7 +41,7 @@
  */
 
 /* Modified for Deep Drill P420/407
- * Sensor RS485 UART2 Interface 
+ * Piezo RS485 Interface 
  *  - Boleslaw Mellerowicz 2017-4-28
  */
 
@@ -54,41 +54,41 @@
 	compatible = "ti,beaglebone", "ti,beaglebone-black", "ti,beaglebone-green";
 
 	// identification
-	part-number = "UART2-485";
+	part-number = "DRILL-UART4-RS485";
 	version = "00A0";
 
 	// resources this cape uses
 	exclusive-use =
-		"P9.21",		// uart2_txd
-		"P9.22",		// uart2_rxd
-		"P9.18",		// uart2_de/re
-		"gpio0_4",
+		"P9.13",		// uart4_txd
+		"P9.11",		// uart4_rxd
+		"P9.12",		// uart4_de/re
+		"gpio1_28",
 
-		"uart2";		// hardware ip used
+		"uart4";		// hardware ip used
 
 	fragment@0 {
 		target = <&am33xx_pinmux>;
 		__overlay__ {
-			bb_uart2_rs485_pins: pinmux_bb_uart2_rs485_pins {
+			bb_uart4_rs485_pins: pinmux_bb_uart4_rs485_pins {
 				pinctrl-single,pins = <
 					
-					0x154 0x09 /* BONE_P9_21 (PIN_OUTPUT | MUX_MODE1) 	    GPIO=3 $PINS=85 UART2_TXD  */
-					0x150 0x29 /* BONE_P9_22 (PIN_INPUT  | MUX_MODE1) 	    GPIO=2 $PINS=84 UART4_RXD */
-					0x158 0x07 /* BONE_P9_18 (PIN_OUTPUT_PULLDOWN | MUX_MODE7)  GPIO=4 $PINS=86 GPIO0_4 */
+					0x074 0x0e /* BONE_P9_13 (PIN_OUTPUT | MUX_MODE6) 	   GPIO=31 $PINS=29 UART4_TXD  // gpmc_wpn.uart4_txd_mux2   */
+					0x070 0x2e /* BONE_P9_11 (PIN_INPUT  | MUX_MODE6) 	   GPIO=30 $PINS=28 UART4_RXD  // gpmc_wait0.uart4_rxd_mux2 */
+					0x078 0x07 /* BONE_P9_12 ( PIN_OUTPUT_PULLDOWN | MUX_MODE7 GPIO=60 $PINS=30 GPIO1_28				    */
 				>;
 			};
 		};
 	};
 
 	fragment@1 {
-		target = <&uart2>;
+		target = <&uart4>;
 		__overlay__ {
 			status = "okay";
 			pinctrl-names = "default";
-			pinctrl-0 = <&bb_uart2_rs485_pins>;
+			pinctrl-0 = <&bb_uart4_rs485_pins>;
 			rs485-rts-delay = <0 0>;
 
-			rts-gpio = <&gpio0 4 1>; /*  GPIO_ACTIVE_HIGH>; */
+			rts-gpio = <&gpio1 28 1>; /*  GPIO_ACTIVE_HIGH>; */
 			rs485-rts-active-high;
 			linux,rs485-enabled-at-boot-time;
 		};

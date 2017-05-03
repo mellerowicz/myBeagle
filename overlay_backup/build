@@ -3,12 +3,10 @@
 echo "Compiling the overlay from .dts to .dtbo"
 
 dtc -O dtb -o DRILL-GPIO-00A0.dtbo -b 0 -@ DRILL-GPIO-00A0.dts
-dtc -O dtb -o UART2-RS485-00A0.dtbo -b 0 -@ UART2-RS485-00A0.dts
+dtc -O dtb -o DRILL-UART2-RS485-00A0.dtbo -b 0 -@ DRILL-UART2-RS485-00A0.dts
 dtc -O dtb -o DRILL-UART4-RS485-00A0.dtbo -b 0 -@ DRILL-UART4-RS485-00A0.dts
 dtc -O dtb -o DRILL-UART1-00A0.dtbo -b 0 -@ DRILL-UART1-00A0.dts
 dtc -O dtb -o DRILL-UART0-00A0.dtbo -b 0 -@ DRILL-UART0-00A0.dts
 dtc -O dtb -o DRILL-I2C0-00A0.dtbo -b 0 -@ DRILL-I2C2-00A0.dts
 #dtc -O dtb -o DM-GPIO-Test-00A0.dtbo -b 0 -@ DM-GPIO-Test.dts
 #dtc -O dtb -o BB-SPI1-01-00A0.dtbo -b 0 -@ BB-SPI1-01-00A0.dts
-#dtc -O dtb -o BB-UART1-00A0.dtbo -b 0 -@ BB-UART1-00A0.dts
-

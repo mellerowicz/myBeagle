@@ -1,0 +1,51 @@
+/*
+ * Copyright (C) 2013 CircuitCo
+ *
+ * Virtual cape for UART0 
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+/* Modified for P420/407 Deep Drill 
+ * AHRS UART0 intarface
+ * - Boleslaw Mellerowicz 2017-5-1
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "ti,beaglebone", "ti,beaglebone-black", "ti,beaglebone-green";
+
+	// identification
+	part-number = "DRILL-UART0";
+	version = "00A0";
+
+	// resources this cape uses
+	exclusive-use =
+
+		"uart0";		// hardware ip used
+
+	fragment@0 {
+		target = <&am33xx_pinmux>;
+		__overlay__ {
+			bb_uart0_pins: pinmux_bb_uart0_pins {
+				pinctrl-single,pins = <
+					0x174 0x08 /* (PIN_OUTPUT | MUX_MODE0) GPIO= $PINS= UART0_TXD // uart0_txd.uart0_txd */
+					0x170 0x28 /* (PIN_INPUT | MUX_MODE0)  GPIO= $PINS= UART0_RXD // uart0_rxd.uart0_rxd */
+				>;
+			};
+		};
+	};
+
+	fragment@1 {
+		target = <&uart0>;
+		__overlay__ {
+			status = "okay";
+			pinctrl-names = "default";
+			pinctrl-0 = <&bb_uart0_pins>;
+		};
+	};
+};

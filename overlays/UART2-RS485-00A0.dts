@@ -51,10 +51,10 @@
 
 
 / {
-	compatible = "ti,beaglebone", "ti,beaglebone-black", "ti,beaglebone-green";
+	compatible = "ti,beaglebone", "ti,beaglebone-black";
 
 	// identification
-	part-number = "UART2-485";
+	part-number = "UART2-RS485";
 	version = "00A0";
 
 	// resources this cape uses
@@ -69,7 +69,7 @@
 	fragment@0 {
 		target = <&am33xx_pinmux>;
 		__overlay__ {
-			bb_uart2_rs485_pins: pinmux_bb_uart2_rs485_pins {
+			bb_uart2_pins: pinmux_bb_uart2_pins {
 				pinctrl-single,pins = <
 					
 					0x154 0x09 /* BONE_P9_21 (PIN_OUTPUT | MUX_MODE1) 	    GPIO=3 $PINS=85 UART2_TXD  */
@@ -81,16 +81,18 @@
 	};
 
 	fragment@1 {
-		target = <&uart2>;
+//		target = <&uart2>;
+		target = <&uart3>;     /* really uart2 */
+
 		__overlay__ {
 			status = "okay";
 			pinctrl-names = "default";
-			pinctrl-0 = <&bb_uart2_rs485_pins>;
-			rs485-rts-delay = <0 0>;
+			pinctrl-0 = <&bb_uart2_pins>;
+			//rs485-rts-delay = <0 0>;
 
-			rts-gpio = <&gpio0 4 1>; /*  GPIO_ACTIVE_HIGH>; */
-			rs485-rts-active-high;
-			linux,rs485-enabled-at-boot-time;
+			//rts-gpio = <&gpio0 4 1>; /*  GPIO_ACTIVE_HIGH>; */
+			//rs485-rts-active-high;
+			//linux,rs485-enabled-at-boot-time;
 		};
 	};
 };

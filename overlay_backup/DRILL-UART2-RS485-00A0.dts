@@ -54,7 +54,7 @@
 	compatible = "ti,beaglebone", "ti,beaglebone-black", "ti,beaglebone-green";
 
 	// identification
-	part-number = "UART2-485";
+	part-number = "DRILL-UART2-RS485";
 	version = "00A0";
 
 	// resources this cape uses
