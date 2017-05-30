@@ -1,0 +1,8 @@
+Code develped to test GPIO on beaglebone black. This includes:
+
+- 1 PWM channel
+- 4 outputs
+- 1 input
+
+
+The am33xx_pwm dto needs to be loaded for the pwm to function.
